@@ -4,6 +4,7 @@ import { JWTUSER } from "../types/JwtUser";
 import catchAsyncError from "./catchAsyncError";
 import ErrorHandler from "../utils/ErrorHandler";
 import UserSession from "../models/UserSession";
+import { IUser } from "../models/User";
 
 export const authorize = catchAsyncError(
   async (
@@ -24,7 +25,9 @@ export const authorize = catchAsyncError(
     }
 
     // check if token exist in the session
-    const dbToken = await UserSession.findOne({ token });
+    const dbToken = await UserSession.findOne({ token }).populate<{
+      userId: IUser;
+    }>("userId");
 
     if (!dbToken) {
       throw new ErrorHandler("Invalid Token.", 401);
@@ -35,7 +38,8 @@ export const authorize = catchAsyncError(
         throw new ErrorHandler("Invalid Token", 401);
       }
 
-      req.user = decoded;
+      req.user = { id: dbToken.userId.id, role: dbToken.userId.role };
+
       next();
     });
   }

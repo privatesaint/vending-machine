@@ -3,11 +3,12 @@ import { RoleType } from "../types/users/roletype";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-interface IUser {
+export interface IUser {
   username: string;
   password: string;
   role: RoleType;
   deposit: number;
+  id: string;
 }
 
 interface IUserMethods {

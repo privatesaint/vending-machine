@@ -73,7 +73,7 @@ router.get("/", ProductController.index);
  *                  type: [string]
  *                  required: true
  *               amountAvailable:
- *                  type: [string]
+ *                  type: [number]
  *                  required: true
  *               cost:
  *                  type: [number]
@@ -130,7 +130,7 @@ router.post("/", authorize, hasRole("seller"), ProductController.store);
  *             required: [productId, quantity]
  *             properties:
  *               productId:
- *                  type: number
+ *                  type: string
  *               quantity:
  *                  type: number
  *
@@ -194,7 +194,7 @@ router.post("/buy", authorize, hasRole("buyer"), ProductController.buyItem);
  *                  type: [string]
  *                  required: true
  *               amountAvailable:
- *                  type: [string]
+ *                  type: [number]
  *                  required: true
  *               cost:
  *                  type: [number]
